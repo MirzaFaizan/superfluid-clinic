@@ -1,0 +1,118 @@
+---
+title: 'Internal Codebase suggestitons'
+description: Overall performance analysis of the system
+---
+
+### Internal Code base suggestions
+
+#### Use react-window / virtualization
+
+for the Screen `/transaction-history` using `react-window` or any sort of virtualization would be a better option for long lists.
+Virtualization enables the app to only display components withinthe viewport. Which results in much less workload for main thread to deal with.
+
+[react-window](https://github.com/bvaughn/react-window)
+
+
+#### use absolute paths
+
+To import modules or other components use import path `e.g ‘/src/components/…'`
+This will ensure that even after moving a component from one dir to another it will still have import paths from one aboslute base path.
+
+```jsx
+❌
+import { withRouter } from "react-router-dom";
+import CANCEL from "../../static/gifs/cancel_streaming.gif";
+import TETRIS from "../../static/gifs/tetris_streaming.gif";
+
+✅
+import CANCEL from "/src/static/gifs/cancel_streaming.gif";
+import TETRIS from "/src/static/gifs/tetris_streaming.gif";
+
+```
+
+
+#### Folder Structure
+
+use a views folder to denote the entry component for every screen.
+views folder to have main components where you can make API calls that are necessary or even import context where needed.
+
+
+```
+src
+|-components
+| |-[componentName]
+|   |-componentUI.js
+|   |-componentStyle.js
+|   |-componentLogic.js (hooks)
+|
+|-views
+|   |-viewName.js
+|
+```
+
+
+#### stick to only one ecma standard 
+
+Ref: `useConnectWeb3.js :54`
+Avoid using ES5 and ES6 in the same code base.
+
+```js
+❌
+    let a = 1;
+    var b = 2;
+✅
+    let a = 1;
+    let b = 2;
+```
+
+
+#### use a spellchecker in dev environment 
+Ref: `ButtonPanel :139`
+There are some basic spell mistakes that can be avoiding by using the spellchecker integrated in the IDE.
+
+My favourite one is [Spellchecker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker#:~:text=Open%20up%20VS%20Code%20and,and%20reload%20window%20to%20enable.)
+
+
+#### apply stronger eslint rules
+Apply stronger eslint lint rules and verify the linting and code consistency before psuhing.
+add a linting hook to `husky` pre-commit.
+
+```json
+{
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:all", "plugin:react/all"]
+}
+```
+
+#### structure of component
+- Move style for each component in a separate file.
+- Separate business logic in hooks from UI
+- Write component level documentation
+
+
+#### Hook with loading and error flags for API calls
+It is better to have a separate hook for making API calls with different flags like `loading`, `err` useEffect
+
+an example can be 
+
+```js
+const useFetch = (url, options) => {
+  const [response, setResponse] = React.useState(null);
+  const [error, setError] = React.useState(null);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        setResponse(json);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchData();
+  }, []);
+  return { response, error };
+};
+```

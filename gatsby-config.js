@@ -1,12 +1,12 @@
 module.exports = {
   siteMetadata: {
-    siteTitle: `Rocket Docs`,
-    defaultTitle: `Rocket Docs`,
-    siteTitleShort: `Rocket Docs`,
-    siteDescription: `Out of the box Gatsby Theme for creating documentation websites easily and quickly`,
-    siteUrl: `https://rocketdocs.netlify.com`,
-    siteAuthor: `@rocketseat`,
-    siteImage: `/banner.png`,
+    siteTitle: `Superfluid`,
+    defaultTitle: `Superfluid`,
+    siteTitleShort: `Superfluid`,
+    siteDescription: `A review of superfluid react codebase and some recommendations`,
+    siteUrl: `http://localhost:8000`,
+    siteAuthor: `@`,
+    siteImage: ``,
     siteLanguage: `en`,
     themeColor: `#8257E6`,
     basePath: `/`,
@@ -17,15 +17,15 @@ module.exports = {
       options: {
         configPath: `src/config`,
         docsPath: `src/docs`,
-        githubUrl: `https://github.com/rocketseat/gatsby-themes`,
-        baseDir: `examples/gatsby-theme-docs`,
+        githubUrl: `https://github.com/mirzafaizan/superfluid`,
+        baseDir: `changes`,
       },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Rocketseat Gatsby Themes`,
-        short_name: `RS Gatsby Themes`,
+        name: `Superfluid Clinic`,
+        short_name: `Docs`,
         start_url: `/`,
         background_color: `#ffffff`,
         display: `standalone`,
@@ -33,12 +33,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // trackingId: ``,
-      },
-    },
     `gatsby-plugin-remove-trailing-slashes`,
     {
       resolve: `gatsby-plugin-canonical-urls`,

@@ -1,0 +1,52 @@
+---
+title: 'Bundle Sizes and Network load'
+description: Overall performance analysis of the system
+---
+
+### Bundle analyzer
+
+The application bundle sizes can be evaluated and reviewed every time a app build happens for deployment.
+It is considered good practice to have a look at bundle size before pushing into `production`
+
+
+Source map explorer analyzes JavaScript bundles using the source maps. This helps you understand where code bloat is coming from.
+
+```js 
+npm install --save source-map-explorer
+```
+
+Then in `package.json`, add the following line to scripts:
+```json
+ "scripts": {
++    "analyze": "source-map-explorer 'build/static/js/*.js'",
+     "start": "react-scripts start",
+```
+Then to analyze the bundle run the production build then run the analyze script.
+
+```bash
+npm run build
+npm run analyze
+```
+
+Right now. About 92.6% of the app bundle size is coming from the main react application.
+
+### React Lazy Loading/ Code Splitting
+
+[Code Splitting](https://reactjs.org/docs/code-splitting.html) should be done at superfluid dashboard routing level to bundle
+the logically related components together and decrease the initial app load bundle size.
+
+In superfluid dashboard at `Container.js` this can be achieved by using `HOC` to lazy load components on specific URL hit.
+
+Reference:
+
+`https://dev.to/karlhadwen/code-splitting-react-router-routes-with-react-lazy-and-react-suspense-1dcp`
+
+
+time estimation : 2 hours
+
+### Using CDN
+
+The files in the `/src/static` should be served from a CDN to decrease the bundle size and faster reloading for the application.
+Other static resources can be put through a similar CDN for better network performance.
+
+time estimation : > 1 hour

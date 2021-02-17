@@ -1,24 +1,14 @@
 # Sidebar navigation
 
-- label: 'Introduction'
-  link: '/'
-- label: 'Getting started'
-  link: '/getting-started'
-- label: Usage
+- label: "Todo"
+  link: "/"
+- label: Review
+  link: /review
+- label: Optimizations
   items:
-    - label: 'Creating docs'
-      link: '/usage/creating-docs'
-    - label: 'Navigation'
-      link: '/usage/navigation'
-    - label: 'Shadowing'
-      link: '/usage/shadowing'
-- label: More
-  items:
-    - label: FAQ
-      link: /faq
-    - label: Changelog
-      link: /changelog
-- label: Community
-  items:
-    - label: 'Github'
-      link: https://github.com/rocketseat/gatsby-themes
+    - label: Network Load
+      link: /usage/network-load
+    - label: React Optimizations
+      link: /usage/react-optimizations
+    - label: Suggestions
+      link: /usage/suggestions

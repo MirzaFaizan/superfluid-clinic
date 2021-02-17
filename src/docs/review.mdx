@@ -1,0 +1,23 @@
+---
+title: 'Review'
+description: Overall performance analysis of the system
+---
+
+### current performance on light house
+
+The application loads with first contentful paint after around 3-4 Mbs of bundle downloading
+
+- 23 static resources are being fetched from the server `/src/static` folder
+- Images do not have `Alt` Attribute.
+
+Biggest JS chunks from the first app load.
+
+```md title=bundleSizes
+…js/2.1c383f69.chunk.js(app.superfluid.finance) 2,055 KiB
+.../build/react_devtools_backend.js 437.9 KiB
+/modules.851cc60….js(script.hotjar.com) 118.3 KiB
+…js/main.b881ee03.chunk.js(app.superfluid.finance) 221.7 KiB
+/frame-modern.800ccd99.js(js.intercomcdn.com) 132.7 KiB
+```
+
+The app lack some features for a being a PWA.

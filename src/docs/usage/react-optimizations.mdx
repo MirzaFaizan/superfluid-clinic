@@ -1,0 +1,72 @@
+---
+title: 'React Optimizations and suggestions'
+description: Overall performance analysis of the system
+---
+
+### Current code Optimizations
+
+#### Structure context for different component do not bundle everything together.
+
+right now, the `app.js` have almost rest of the react contexts wrapped around it. Which means Root component will rerender every time context state is updated.
+
+```jsx
+❌
+<Router>
+    <DasboardCtxProvider>
+      <NotificationProvider>
+        <ModalProvider>
+          <CountryCtxProvider>
+            <Web3CtxProvider>
+
+              <ConverterCtxProvider>
+                <LanguageCtxProvider>
+                  <App />
+                </LanguageCtxProvider>
+              </ConverterCtxProvider>
+            </Web3CtxProvider>
+          </CountryCtxProvider>
+        </ModalProvider>
+      </NotificationProvider>
+    </DasboardCtxProvider>
+  </Router>,
+
+✅
+  <>
+    <NotificationProvider>
+        <NotificationPanel />
+    </NotificationProvider>
+    <CountryCtxProvider>
+        <NavBar/>
+    </CountryCtxProvider>
+  </>
+```
+
+every context provider should pushed down to the nearest consumer.
+
+#### use react useEffect() with deps
+
+Many places in repo `useEffect()` is being used without providing dependency array. This can result in infinite rerednering, It is advised
+to use the defined way.
+
+
+#### write business logic in utils
+
+Ref: `useConnectWeb3` and rest...
+whenever you are using hooks use them to store states only, for any logical and busniess operations make seprate utils and call them inside your hook.
+only use `use` prefix with react file names or fucntions when you are intented to share the state with some other components.
+
+
+#### Using service workers
+
+There are many events and dispatches in the repo for them using *service worker* would be a better option 
+service workers can recognize push event based `keypresses` and all the thread heavy functions can be served from that *service workers*﻿
+use service worker for handling events this will make them run on a totally different thread https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
+
+
+#### Remove API calls from contexts
+
+Ref: `Web3Context` and rest...
+
+Tear down the API calls from Contexts to utils and just keep states on top use utils or custom hooks to update the states.
+
+
